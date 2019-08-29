@@ -1,3 +1,4 @@
+// Dependencies
 var axios = require("axios");
 var cheerio = require("cheerio");
 var Article = require("../models/Article");
@@ -9,23 +10,24 @@ module.exports = function(app) {
         console.log("scrape is called");
         // Axios req to Buzzfeed
         axios.get("https://www.buzzfeednews.com").then(function(response){
-            
+
             // Array of all articles
             let articleArray = [];
             
             // Grab html
-            var $ = cheerio.load(response.data);
+            const $ = cheerio.load(response.data);
                 $("article.newsblock-story-card").each(function(i, element){
+
                     //Headline
-                    let headline = $(element).children("a").children("span.newsblock-story-card__info").children("h2").text();
+                    let headline = $(element).children("span.newsblock-story-card__info").children("h2").text();
                     console.log(headline);
 
                     // Summary
-                    let summary = $(element).children("a").children("span.newsblock-story-card__info").children("p").text();
+                    let summary = $(element).children("span.newsblock-story-card__info").children("p").text();
                     console.log(summary);
 
                     // URL
-                    let url = $(element).children("a").attr("href");
+                    let url = $(element).children("span.newsblock-story-card__info").children("h2").children("a").attr("href");
                     console.log(url);
 
                     // Object for each piece
@@ -35,10 +37,9 @@ module.exports = function(app) {
                         url
                     }
 
-                    // Add piece to array
+                    // // Add piece to array
                     articleArray.push(articlePiece);
                 })
-
 
                 Article.create(articleArray).then(data => {
                     console.log(data)
