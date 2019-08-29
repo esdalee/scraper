@@ -26,5 +26,5 @@ mongoose.connect("mongodb://localhost/feedscraper", { useNewUrlParser: true });
 
 // Start server
 app.listen(3000, function(){
-    console.log("Running on port" + PORT)
-})
+    console.log("Running on port" + PORT);
+});

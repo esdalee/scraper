@@ -1,7 +1,7 @@
 // Dependencies
 var axios = require("axios");
 var cheerio = require("cheerio");
-var Article = require("../models/Article");
+// var Article = require("../models/Article");
 var db = require("../models");
 
 module.exports = function(app) {
@@ -59,15 +59,15 @@ module.exports = function(app) {
     });
 
     // Retrieve all stored Articles from db
-    app.get("/allarticles", function(req,res){
-        db.Article.find({}, function(err, article) {
+    app.get("/list", function(req,res){
+        db.Article.find({}, function(err, dbArticle) {
             // If error, send to user
             if(err) {
                 res.json(err);
             }
             // If no error, send articles to user
             else {
-                res.json(article);
+                res.json(dbArticle);
             }
             // Message user
             res.send("Completed");
@@ -75,28 +75,43 @@ module.exports = function(app) {
     })
 
     // Get route to attach note to article by id
-    app.get("/allarticles/:id", function(req, res){
+    app.get("/list/:id", function(req, res){
         // Search article by id then attach notes
         db.Article.findOne({_id: req.params.id}).populate("note")
-        .then(function(article){
+        .then(function(dbArticle){
             // Send article/note to user 
-            res.json(article);
+            res.json(dbArticle);
         }).catch(function(err){
             // Error handler
             res.json(err);
         })        
     })
 
-    // // Retrieve data
-    // app.get("/articles", function(req, res){
-    //     // Retrieve every document
-    //     Article.find({}).then(function(dbArticle){
-    //         // Send back articles
-    //         res.json(dbArticle);
-    //     }).catch(function(err){
-    //         // Error handler, send to user
-    //         res.json(err);
-    //     })
-    // });
-
+    // Post route for updating notes
+    app.get("/list/:id", function(req, res){
+        // Create note
+        db.Note.create(req.body).then(function(dbNote){
+            // Find corresponding article and attach the note 
+            return db.Article.findOneAndUpdate({_id: req.params.id}, {note: dbNote._id}, {new: true});
+        }).then(function(dbArticle){
+            // Send back article with note
+            res.json(dbArticle);
+        }).catch(function(err){
+            // Error handler, send to user
+            res.json(err);
+        });
+    });
+  
+  // Post route to delete note
+  app.post("/delete/:id", function (req,res){
+    // If note found, delete
+    db.Note.findOne({_id: req.params.id}).remove("note")
+    // display result
+    .then(function(dbNote){
+        res.json(dbNote);
+    }).catch(function(err){
+        // Error handler
+        res.json(err);
+    })
+  });
 }
