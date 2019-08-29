@@ -9,6 +9,12 @@ var axios = require("axios");
 var app = express();
 var PORT = 3000;
 
+// Models
+var db = require("./models");
+
+// Routes
+require("./routes/apiroutes")(app);
+
 // Middleware
 // Req body as JSON
 app.use(express.urlencoded({ extended: true}));
@@ -17,11 +23,6 @@ app.use(express.static("public"));
 
 // Connect to Mongodb
 mongoose.connect("mongodb://localhost/feedscraper", { useNewUrlParser: true });
-
-// Routes
-require("./routes/apiroutes")(app);
-// xyz(app);
-
 
 // Start server
 app.listen(3000, function(){

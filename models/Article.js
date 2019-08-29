@@ -1,3 +1,4 @@
+// Mongoose to construct schema
 var mongoose = require("mongoose");
 
 // Constructor
@@ -16,11 +17,21 @@ var ArticleSchema = new Schema({
     url: {
         type: String,
         required:true
-    }
+    },
+    img: {
+        data: Buffer,
+        type: String,
+        required:true
+    },
+    // Store ObjectId of Notes
+    note: {
+        type: Schema.Types.ObjectId,
+        ref: "Note"
+      }
 });
 
 // Create model based on schema
 var Article = mongoose.model("Article", ArticleSchema);
 
-// export model
+// export Article model
 module.exports = Article;
