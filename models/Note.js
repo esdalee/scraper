@@ -9,7 +9,7 @@ var NoteSchema = new Schema({
     subject: {
         type: String
     },
-    description: {
+    body: {
         type: String
     }
 });

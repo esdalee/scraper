@@ -31,15 +31,14 @@ module.exports = function(app) {
                     console.log(url);
 
                     // Image    
-                    let img = $(element).children("span.newsblock-story-card__info").children(".img-wireframe__image-container").children("img").attr("src");
+                    // let img = $(element).children("span.newsblock-story-card__info").children(".img-wireframe__image-container").children("img").attr("src");
                     // console.log(img);
 
                     // Object for each piece
                     let articlePiece = {
                         headline,
                         summary,
-                        url,
-                        img
+                        url
                     }
 
                     // // Add piece to array

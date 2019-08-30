@@ -14,10 +14,12 @@ var db = require("./models");
 
 // Routes
 require("./routes/apiroutes")(app);
+require("./public/app")(app);
 
 // Middleware
 // Req body as JSON
-app.use(express.urlencoded({ extended: true}));
+app.use(logger("dev"));
+app.use(express.urlencoded({ extended: false}));
 app.use(express.json());
 app.use(express.static("public"));
 
