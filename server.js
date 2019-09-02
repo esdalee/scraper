@@ -1,5 +1,6 @@
 // Add Dependencies
 var express = require("express");
+var exphbs = require("express-handlebars");
 var mongoose = require("mongoose");
 var cheerio = require("cheerio");
 var axios = require("axios");
@@ -21,11 +22,15 @@ app.use(express.urlencoded({ extended: false}));
 app.use(express.json());
 app.use(express.static("public"));
 
+// Set Handlebars
+app.engine("handlebars", exphbs({ defaultLayout: "main" }));
+app.set("view engine", "handlebars");
+
 // Connect to Mongodb
 mongoose.connect("mongodb://localhost/feedscraper", { useNewUrlParser: true });
 
 // Routes
-require("./routes/apiroutes")(app);
+require("./routes/apiRoutes")(app);
 
 // Start server
 app.listen(3000, function(){

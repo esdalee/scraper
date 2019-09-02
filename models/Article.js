@@ -18,11 +18,11 @@ var ArticleSchema = new Schema({
         type: String,
         required:true
     },
-    // img: {
-    //     data: Buffer,
-    //     type: String,
-    //     required:true
-    // },
+    img: {
+        // data: Buffer,
+        type: String,
+        required:true
+    },
     // Store ObjectId of Notes
     note: {
         type: Schema.Types.ObjectId,
