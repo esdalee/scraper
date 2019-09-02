@@ -3,28 +3,29 @@ var express = require("express");
 var mongoose = require("mongoose");
 var cheerio = require("cheerio");
 var axios = require("axios");
-// var xyz = require("./routes/apiroutes");
+var logger = require("morgan");
 
 // Initialize Express
 var app = express();
-var PORT = 3000;
+var PORT = process.env.PORT || 3000;
 
-// Models
+// Require all models
 var db = require("./models");
 
-// Routes
-require("./routes/apiroutes")(app);
-require("./public/app")(app);
-
 // Middleware
-// Req body as JSON
+
+// Use morgan logger to log requests
 app.use(logger("dev"));
+// Req body as JSON
 app.use(express.urlencoded({ extended: false}));
 app.use(express.json());
 app.use(express.static("public"));
 
 // Connect to Mongodb
 mongoose.connect("mongodb://localhost/feedscraper", { useNewUrlParser: true });
+
+// Routes
+require("./routes/apiroutes")(app);
 
 // Start server
 app.listen(3000, function(){

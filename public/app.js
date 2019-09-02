@@ -1,8 +1,8 @@
 // JSON-ify articles
 
-$(document).ready(function(){
+// $(document).ready(function(){
     
-})
+// })
 
 $.getJSON("/list", function(articles){
     for (var i=0; i<articles.length; i++) {
@@ -21,7 +21,7 @@ $(document).on("click", "p", function(){
     // AJAX call to get articles
     $.ajax({
         method: "GET",
-        url: "/list/" + useId
+        url: "/list/" + userId
     }).then(function(data){
         console.log(data);
         // Add Subject of note     
@@ -41,14 +41,16 @@ $(document).on("click", "p", function(){
     });
 });
 
-$(document).on("click", "#submit", function(){
-    // Grab ID
-    var useId = $(this).attr("data-id");
+$("#submit").on("click", function(e){
+    e.preventDefault();
     
+    // Grab ID
+    var userId = $(this).attr("data-id");
+        
     // AJAX request to put in note
     $.ajax({
         method: "POST",
-        url: "/list/" + useId,
+        url: "/list/" + userId,
         data: {
             subject: $("#subjectinput").val(),
             body: $("#bodyinput").val()
@@ -60,5 +62,4 @@ $(document).on("click", "#submit", function(){
     // Empty the note input areas
     $("#subjectinput").val("");
     $("#bodyinput").val("");
-
 });
