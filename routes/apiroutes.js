@@ -47,12 +47,12 @@ module.exports = function(app) {
 
                 db.Article.create(articleArray).then(data => {
                     console.log(data)
-                    // res.status(200).json({ data });
+                    res.status(200).json({ data });
                 }).catch(err => {
                     console.log(err);
-                    // res.status(500).json({
-                    //     error: "error occured!"
-                    // });
+                    res.status(500).json({
+                        error: "error occured!"
+                    });
                 })
         });
     });
