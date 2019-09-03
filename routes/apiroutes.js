@@ -42,32 +42,35 @@ module.exports = function(app) {
                         img
                     }
 
-                    // // Add piece to array
+                    // Add article to array
                     articleArray.push(articlePiece);
                 })
 
-                db.Article.create(articleArray).then(data => {
-                    console.log(data)
-                    res.status(200).json({ data });
-                }).catch(err => {
-                    console.log(err);
-                    res.status(500).json({
-                        error: "error occured!"
-                    });
-                })
+            db.Article.create(articleArray).then(data => {
+                console.log(data)
+                res.status(200).json({ data });
+            }).catch(err => {
+                console.log(err);
+                res.status(500).json({
+                    error: "error occured!"
+                });
+            })
         });
     });
 
     // Retrieve all stored Articles from db
     app.get("/list", function(req,res){
-        db.Article.find({}, function(err, dbArticle) {
+        db.Article.find({"saved": true}).populate("notes").exec(function(err, dbArticle) {
             // If error, send to user
             if(err) {
                 res.json(err);
             }
             // If no error, send articles to user
             else {
-                res.json(dbArticle);
+                var hbsObj = {
+                    article: articles
+                };
+                res.render("saved", hbsObj);
             }
             // Message user
             res.send("Completed");
@@ -87,8 +90,24 @@ module.exports = function(app) {
         })        
     })
 
+    // Post route to save article
+    app.post("/list/save/:id", function (req,res){
+        // If note found, delete
+        db.Note.findOneAndUpdate({_id: req.params.id}, {"saved": true})
+        // display result
+        .then(function(err, dbNote){
+            if (err) {
+                console.log(err);
+            }
+            else {
+                res.send(dbNote);
+            }
+        });
+    });
+
+
     // Post route for updating notes
-    app.get("/list/:id", function(req, res){
+    app.post("/notes/:id", function(req, res){
         // Create note
         db.Note.create(req.body).then(function(dbNote){
             // Find corresponding article and attach the note 
@@ -101,9 +120,9 @@ module.exports = function(app) {
             res.json(err);
         });
     });
-  
+
   // Post route to delete note
-  app.post("/delete/:id", function (req,res){
+  app.post("/notes/delete/:id", function (req,res){
     // If note found, delete
     db.Note.findOne({_id: req.params.id}).remove("note")
     // display result

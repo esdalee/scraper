@@ -18,7 +18,8 @@ var db = require("./models");
 // Use morgan logger to log requests
 app.use(logger("dev"));
 // Req body as JSON
-app.use(express.urlencoded({ extended: false}));
+app.use(express.urlencoded({ 
+    extended: false}));
 app.use(express.json());
 app.use(express.static("public"));
 
