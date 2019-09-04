@@ -4,6 +4,23 @@
     
 // })
 
+// Set clicked navbar tab to active
+$(".navbar-nav li").click(function(){
+    $(".navbar-nav li").removeClass("active");
+    $(this).addClass("active");
+});
+
+// Scrape
+$("#scrapeBtn").on("click", function() {
+    $.ajax({
+        method: "GET",
+        url: "/scrape",
+    }).then(function(data) {
+        console.log(data)
+    })
+});
+
+
 $.getJSON("/list", function(articles){
     for (var i=0; i<articles.length; i++) {
         // All info of articles
@@ -16,12 +33,12 @@ $(document).on("click", "p", function(){
     // Empty notes from section
     $("#notes").empty();
     // Save ID
-    var userId = $(this).attr("data-id");
+    var thisId = $(this).attr("data-id");
 
     // AJAX call to get articles
     $.ajax({
         method: "GET",
-        url: "/list/" + userId
+        url: "/list/" + thisId
     }).then(function(data){
         console.log(data);
         // Add Subject of note     
@@ -41,16 +58,36 @@ $(document).on("click", "p", function(){
     });
 });
 
-$("#submit").on("click", function(e){
-    e.preventDefault();
+$("#addNote").on("click", function(e){
+    // e.preventDefault();
     
     // Grab ID
-    var userId = $(this).attr("data-id");
+    var thisId = $(this).attr("data-id");
         
     // AJAX request to put in note
     $.ajax({
         method: "POST",
-        url: "/list/" + userId,
+        url: "/notes/" + thisId,
+    }).then(function(data){
+        console.log(data);
+        $("#notes").empty();
+    });
+
+    // Empty the note input areas
+    $("#subjectinput").val("");
+    $("#bodyinput").val("");
+});
+
+$("#deleteBtn").on("click", function(e){
+    // e.preventDefault();
+    
+    // Grab ID
+    var thisId = $(this).attr("data-id");
+
+    // AJAX request to delete note
+    $.ajax({
+        method: "DELETE",
+        url: "/notes/delete/:id" + thisId,
         data: {
             subject: $("#subjectinput").val(),
             body: $("#bodyinput").val()
@@ -59,7 +96,4 @@ $("#submit").on("click", function(e){
         $("#notes").empty();
     });
 
-    // Empty the note input areas
-    $("#subjectinput").val("");
-    $("#bodyinput").val("");
 });

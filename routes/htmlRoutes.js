@@ -4,8 +4,7 @@ module.exports = function (app) {
         res.render("index");
     });
 
-    app.get("/list", function (req, res) {
+    app.get("/saved", function (req, res) {
         res.render("saved");
     });
-
 }
