@@ -8,35 +8,4 @@
             <a class="btn btn-primary btn-lg" id= "scrapeBtn" href="/scrape" role="button">Scrape the Buzz</a>
         </p>
     </div>
-
-    <div class="row justify-content-center">
-        <div class="col-md-12">
-            <ul class="articles">
-                {{#each article}}
-                <li>
-                    <div class="card">
-                        <div class="row">
-                            <div class="col-md-3">
-                                <img src={{this.img}} class="card-img img-fluid mx-auto d-block" alt="article-picture">
-                            </div>
-                            <div class="col-md-9">
-                                <a href={{this.url}} target="_blank"></a>
-                                <div class="card-body">
-                                    <h5 class="card-title">{{this.subject}}</h5>
-                                    <p class="card-text">{{this.summary}}</p>
-                                    <button type="button" data-id={{this.id}} class="btn btn-primary" id="saveBtn">Save</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </li>
-                {{/each}}
-            </ul>
-        </div>
-    </div>
-
 </div>
-{{!-- <div class="container">
-    <div id="articles"></div>
-    <div id="notes"></div>
-</div> --}}

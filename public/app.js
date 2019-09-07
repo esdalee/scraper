@@ -1,8 +1,3 @@
-// JSON-ify articles
-
-// $(document).ready(function(){
-    
-// })
 
 // Set clicked navbar tab to active
 $(".navbar-nav li").click(function(){
@@ -21,13 +16,6 @@ $("#scrapeBtn").on("click", function() {
 });
 
 
-$.getJSON("/list", function(articles){
-    for (var i=0; i<articles.length; i++) {
-        // All info of articles
-        $("#articles").append("<p data-id=" + data[i]._id + "/>" + data[i].headline + "<br/>" + data[i].summary + "<br/>" + data[i].url + "</p>");
-    }
-});
-
 // When user clicks on the article
 $(document).on("click", "p", function(){
     // Empty notes from section
@@ -38,7 +26,7 @@ $(document).on("click", "p", function(){
     // AJAX call to get articles
     $.ajax({
         method: "GET",
-        url: "/list/" + thisId
+        url: "/saved/" + thisId
     }).then(function(data){
         console.log(data);
         // Add Subject of note     
@@ -79,8 +67,6 @@ $("#addNote").on("click", function(e){
 });
 
 $("#deleteBtn").on("click", function(e){
-    // e.preventDefault();
-    
     // Grab ID
     var thisId = $(this).attr("data-id");
 
@@ -93,7 +79,8 @@ $("#deleteBtn").on("click", function(e){
             body: $("#bodyinput").val()
         }
     }).then(function(data){
-        $("#notes").empty();
+        console.log(data);
+        window.location = "/saved"
     });
 
 });

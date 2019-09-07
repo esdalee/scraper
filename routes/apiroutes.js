@@ -1,7 +1,6 @@
 // Dependencies
 var axios = require("axios");
 var cheerio = require("cheerio");
-// var Article = require("../models/Article");
 var db = require("../models");
 
 module.exports = function(app) {
@@ -58,71 +57,59 @@ module.exports = function(app) {
         });
     });
 
-    // Get saved Articles from db
+    // Get All Articles from db
     app.get("/list", function(req,res){
-        db.Article.find({}).populate("notes").then(function(err, dbArticle) {
-            // If error, send to user
-            if(err) {
-                res.json(err);
-            }
-            // If no error, send articles to user
-            else {
+        db.Article.find({}).limit(20).then(function(dbArticle) {
+            console.log(dbArticle);
                 var hbsObj = {
                     article: dbArticle
                 };
-                res.render("saved", hbsObj);
-            }
-            // Message user
-            res.send("Scrape Completed");
-        });
-    })
+                // Send back articles
+                res.render("list", hbsObj);
+        }).catch(err => 
+            console.log(err)
+        );
+    });
 
-    // Get saved Articles from db
+    // Get Saved Articles from db
     app.get("/saved", function(req,res){
-        db.Article.find({"saved": true}).populate("notes").exec(function(err, dbArticle) {
-            // If error, send to user
-            if(err) {
-                res.json(err);
-            }
-            // If no error, send articles to user
-            else {
-                var hbsObj = {
-                    article: dbArticle
-                };
+        db.Article.find({"saved": true}).populate("notes").then(function(dbArticle) {
+            var hbsObj = {
+                article: dbArticle
+            };
+            // Send back saved articles
                 res.render("saved", hbsObj);
-            }
-            // Message user
-            res.send("All Saved Articles");
-        });
-    })
+        }).catch(err =>
+            console.log(err)
+        );
+    });
 
+    // Post Route to Save Article
+    app.post("/saved/:id", function(req, res){
+        // Search article by id
+        db.Article.findOneAndUpdate({_id: req.params.id}, {"saved": true})
+        .then(function(dbArticle){
+            // Redirect user to Saved Articles Pg
+            res.redirect("/saved");
+        }).catch(function(err){
+            // Error handler
+            res.render(err);
+        })        
+    });
+
+    // UPDATE THIS
     // Get route to attach note to article by id
-    app.get("/list/:id", function(req, res){
+    app.get("/saved/:id", function(req, res){
         // Search article by id then attach notes
         db.Article.findOne({_id: req.params.id}).populate("note")
         .then(function(dbArticle){
-            // Send article/note to user 
-            res.json(dbArticle);
+            // Redirect to page
+            res.redirect("/saved");
         }).catch(function(err){
             // Error handler
             res.json(err);
         })        
     })
-
-    // Post route to save article
-    app.post("/list/save/:id", function (req,res){
-        // If note found, delete
-        db.Note.findOneAndUpdate({_id: req.params.id}, {"saved": true})
-        // display result
-        .then(function(err, dbNote){
-            if (err) {
-                console.log(err);
-            }
-            else {
-                res.send(dbNote);
-            }
-        });
-    });
 
     // Post route for creating and updating notes
     app.post("/notes/:id", function(req, res){

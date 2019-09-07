@@ -2,3 +2,7 @@
     align-items: middle;
     justify-content: center;
 }
+
+.articles li {
+    list-style-type: none;
+}

@@ -32,6 +32,8 @@ mongoose.connect("mongodb://localhost/feedscraper", { useNewUrlParser: true });
 
 // Routes
 require("./routes/apiRoutes")(app);
+require("./routes/htmlRoutes")(app);
+
 
 // Start server
 app.listen(3000, function(){
