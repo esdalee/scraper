@@ -1,33 +1,46 @@
 <!--Saved Articles-->
 
-<div class="container">
-    <div class="col-md-12 jumbotron">
+<div class="row justify-content-center">
+    <div class="col-md-12 jumbotron text-center">
         <div class="text-center">
             <h1>All Saved Articles</h1>
         </div>
     </div>
-    <div class="col-md-12">
-        {{#if article}}
-            {{#each article}}
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h4>{{this.headline}}</h4>
+</div>
+<div class="row justify-content-center">
+    <div class="col-md-2"></div>
+    <div class="col-md-10">
+        <ul class="articles">
+            {{#if article}}
+                {{#each article}}
+                <li>
+                    <div class="card">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <img src={{this.img}} class="card-img img-fluid mx-auto d-block" alt="article-image">
+                            </div>
+                            <div class="col-md-9">
+                                <a href={{this.url}} target="_blank"></a>
+                                <div class="card-body">
+                                    <h5 class="card-title">{{this.headline}}</h5>
+                                    <p class="card-text">{{this.summary}}</p>
+                                    <br><br>
+                                    <button type="button" class="btn btn-success" id="addNote" data-id={{this._id}}>Add Note</button>
+                                    <button type="button" class="btn btn-danger" id="deleteBtn" data-id={{this._id}}>Delete</button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
+                </li>
+                {{/each}}
+            {{else}}
+                <div class="panel panel-default">
                     <div class="panel-body">
-                        <p> {{this.summary}}</p>
-                        <a href={{this.url}} target="_blank">{{this.url}}</a>
-                        <br><br>
-                        <button type="button" class="btn btn-success" id="addNote" data-id={{this._id}}>See/Add Note</button>
-                        <button type="button" class="btn btn-danger" id="deleteBtn" data-id={{this._id}}>Delete</button>
+                        <h4>None available</h4>
                     </div>
                 </div>
-            {{/each}}
-        {{else}}
-        <div class="panel panel-default">
-            <div class="panel-body">
-                <h4>None available</h4>
-            </div>
-        </div>
-        {{/if}}
+            {{/if}}
+        </ul>
     </div>
+    <div class="col-md-2"></div>
 </div>

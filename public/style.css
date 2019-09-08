@@ -1,3 +1,7 @@
+.containerBody{
+    background-image: url("./images/scrolls.png");
+}
+
 .jumbotron {
     align-items: middle;
     justify-content: center;

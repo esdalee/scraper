@@ -87,28 +87,26 @@ module.exports = function(app) {
     // Post Route to Save Article
     app.post("/saved/:id", function(req, res){
         // Search article by id
-        db.Article.findOneAndUpdate({_id: req.params.id}, {"saved": true})
-        .then(function(dbArticle){
+        db.Article.findOneAndUpdate({_id: req.params.id}, {"saved": true}).then(function(dbArticle) {
             // Redirect user to Saved Articles Pg
             res.redirect("/saved");
         }).catch(function(err){
             // Error handler
             res.render(err);
-        })        
+        })
     });
 
     // UPDATE THIS
     // Get route to attach note to article by id
     app.get("/saved/:id", function(req, res){
         // Search article by id then attach notes
-        db.Article.findOne({_id: req.params.id}).populate("note")
-        .then(function(dbArticle){
+        db.Article.findOne({_id: req.params.id}).populate("note").then(function(dbArticle) {
             // Redirect to page
             res.redirect("/saved");
         }).catch(function(err){
             // Error handler
             res.json(err);
-        })        
+        })
     })
 
     // Post route for creating and updating notes
