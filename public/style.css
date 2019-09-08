@@ -1,10 +1,30 @@
 .containerBody{
-    background-image: url("./images/scrolls.png");
+    background-image: url("./images/buzzfeed.jpeg");
+    opacity: 0.9;
+    height: 100%;
+    font-family: 'Livvic', serif;
+}
+
+.container {
+    opacity: 0.8;
+}
+
+.containerLanding{
+    height: 750px;
 }
 
 .jumbotron {
     align-items: middle;
     justify-content: center;
+}
+
+.vertical-center{
+    align-items: center;
+    margin-top: 150px;
+}
+
+.scrapeSign {
+    text-align: center;
 }
 
 .articles li {
