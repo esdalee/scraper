@@ -23,11 +23,15 @@ var ArticleSchema = new Schema({
         type: String,
         required:true
     },
+    saved: {
+        type: Boolean,
+        default: false
+      },
     // Store ObjectId of Notes
-    note: {
+    note: [{
         type: Schema.Types.ObjectId,
         ref: "Note"
-      }
+        }]
 });
 
 // Create model based on schema

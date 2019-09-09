@@ -6,12 +6,8 @@ var Schema = mongoose.Schema;
 
 // Article object
 var NoteSchema = new Schema({
-    subject: {
-        type: String
-    },
-    body: {
-        type: String
-    }
+    subject: String,
+    body: String
 });
 
 // Create model based on schema

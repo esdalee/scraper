@@ -3,20 +3,22 @@
     <div class="col-md-12">
         <ul class="articles">
             {{#each article}}
-            <li>
-                <div class="card">
-                    <div class="row text-align">
-                        <div class="col-md-12">
-                            <a href={{this.url}} target="_blank"></a>
-                            <div class="card-body">
-                                <h5 class="card-title">{{this.headline}}</h5>
-                                <p class="card-text">{{this.summary}}</p>
-                                <button type="button" class="btn btn-success" id="saveArticle" data-id={{this._id}}>Save Article</button>
+                {{#unless saved}}
+                <li>
+                    <div class="card">
+                        <div class="row text-align">
+                            <div class="col-md-12">
+                                <a href={{this.url}} target="_blank"></a>
+                                <div class="card-body">
+                                    <h5 class="card-title">{{this.headline}}</h5>
+                                    <p class="card-text">{{this.summary}}</p>
+                                    <button type="button" class="btn btn-success" id="saveArticle" data-id={{this._id}}>Save Article</button>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </li>
+                </li>
+                {{#unless}}
             {{/each}}
         </ul>
     </div>

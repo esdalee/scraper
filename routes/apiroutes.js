@@ -4,7 +4,7 @@ var cheerio = require("cheerio");
 var db = require("../models");
 
 module.exports = function(app) {
-    // Scrape & display data
+    // Scrape data
     app.get("/scrape", function(req, res){
         console.log("scrape is called");
         // Axios req to Buzzfeed
@@ -46,7 +46,7 @@ module.exports = function(app) {
             })
 
             db.Article.create(articleArray).then(data => {
-                // console.log(data)
+                console.log(data)
                 res.status(200).json({ data });
             }).catch(err => {
                 console.log(err);
@@ -73,7 +73,7 @@ module.exports = function(app) {
 
     // Get Saved Articles from db
     app.get("/saved", function(req,res){
-        db.Article.find({"saved": true}).populate("notes").then(function(dbArticle) {
+        db.Article.find({saved: true}).populate("note").then(function(dbArticle) {
             var hbsObj = {
                 article: dbArticle
             };
@@ -84,56 +84,70 @@ module.exports = function(app) {
         );
     });
 
-//     // Post Route to Save Article
-//     app.post("/saved/:id", function(req, res){
-//         // Search article by id
-//         db.Article.findOneAndUpdate({_id: req.params.id}, {"saved": true}).then(function(dbArticle) {
-//             // Redirect user to Saved Articles Pg
-//             res.redirect("/saved");
-//         }).catch(function(err){
-//             // Error handler
-//             res.render(err);
-//         })
-//     });
+    // Post Route to Save Article
+    app.post("/save/:id", function(req, res){
+        // Search article by id
+        db.Article.findOneAndUpdate({_id: req.params.id}, {saved: true}).then(function(dbArticle) {
+            // Redirect user to Saved Articles Pg
+            res.redirect("/list");
+        }).catch(function(err){
+            // Error handler
+            res.render(err);
+        })
+    });
 
-//     // UPDATE THIS
-//     // Get route to attach note to article by id
-//     app.get("/saved/:id", function(req, res){
-//         // Search article by id then attach notes
-//         db.Article.findOne({_id: req.params.id}).populate("note").then(function(dbArticle) {
-//             // Redirect to page
-//             res.redirect("/saved");
-//         }).catch(function(err){
-//             // Error handler
-//             res.json(err);
-//         })
-//     })
+    // Delete Route to Remove Article
+    app.delete("/delete/:id", function(req, res){
+        // Search article by id
+        db.Article.findOneAndRemove({_id: req.params.id})
+        .then(function(dbArticle) {
+            // Redirect user to Saved Articles Pg
+            res.redirect("/saved");
+        }).catch(function(err){
+            // Error handler
+            res.render(err);
+        })
+    });
 
-//     // Post route for creating and updating notes
-//     app.post("/notes/:id", function(req, res){
-//         // Create note
-//         db.Note.create(req.body).then(function(dbNote){
-//             // Find corresponding article and attach the note 
-//             return db.Article.findOneAndUpdate({_id: req.params.id}, {note: dbNote._id}, {new: true});
-//         }).then(function(dbNote){
-//             // Send back article with note
-//             res.json(dbNote);
-//         }).catch(function(err){
-//             // Error handler, send to user
-//             res.json(err);
-//         });
-//     });
+    // Routes for Notes
+    // Get route to return note of an article
+    app.get("/saved/note/:id", function(req, res){
+        // Search article by id then attach notes
+        db.Note.findOne({_id: req.params.id})
+        .then(function(dbNote) {
+            // Redirect to page
+            res.json(dbNote);
+        }).catch(function(err){
+            // Error handler
+            res.json(err);
+        })
+    })
 
-//   // Post route to delete note
-//   app.post("/notes/delete/:id", function (req,res){
-//     // If note found, delete
-//     db.Note.findOneAndRemove({_id: req.params.id})
-//     // display result
-//     .then(function(dbNote){
-//         res.json(dbNote);
-//     }).catch(function(err){
-//         // Error handler
-//         res.json(err);
-//     })
-//   });
+    // Post route for creating note
+    app.post("/saved/note/create/:id", function(req, res){
+        // Create note
+        db.Note.create(req.body).then(function(dbNote){
+            // Find corresponding article and attach the note 
+            db.Article.findOneAndUpdate({_id: req.params.id}, {$push: {note: dbNote._id}}, {new: true});
+        }).then(function(note){
+            // Send back article with note
+            res.json(note);
+        }).catch(function(err){
+            // Error handler, send to user
+            res.json(err);
+        });
+    });
+
+  // Post route to delete note
+  app.post("/saved/note/delete/:id", function (req,res){
+    // If note found, delete
+    db.Note.findOneAndRemove({_id: req.params.id})
+    // display result
+    .then(function(dbNote){
+        res.json(dbNote);
+    }).catch(function(err){
+        // Error handler
+        res.json(err);
+    })
+  });
 }
