@@ -84,8 +84,8 @@ module.exports = function(app) {
         );
     });
 
-    // Post Route to Save Article
-    app.post("/save/:id", function(req, res){
+    // Get Route to Save Article
+    app.get("/save/:id", function(req, res){
         // Search article by id
         db.Article.findOneAndUpdate({_id: req.params.id}, {saved: true}).then(function(dbArticle) {
             // Redirect user to Saved Articles Pg
@@ -123,7 +123,7 @@ module.exports = function(app) {
         })
     })
 
-    // Post route for creating note
+    // Post route for creating/saving note
     app.post("/saved/note/create/:id", function(req, res){
         // Create note
         db.Note.create(req.body).then(function(dbNote){

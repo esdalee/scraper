@@ -22,9 +22,33 @@ $(document).ready(function(){
         })
     });
 
+    // Save Article
+    $("#saveArticleBtn").on("click", function(e) {
+        e.preventDefault();
+        let id = $(this).attr("data-id");
+        // Ajax
+        $.ajax({
+            method: "GET",
+            url: "/save/" + id,
+        }).then(function(data) {
+            console.log(data);
+            window.location = "/list";
+        })
+    });
 
-
-
+    // Remove Article
+    $("#deleteArticleBtn").on("click", function(e) {
+        e.preventDefault();
+        let id = $(this).attr("data-id");
+        // Ajax
+        $.ajax({
+            method: "DELETE",
+            url: "/delete/" + id,
+        }).then(function(data) {
+            console.log(data);
+            window.location = "/saved";
+        })
+    });
 
     // Get Note Inputs
     $("#saveNoteBtn").on("click", function(e){
@@ -67,38 +91,4 @@ $(document).ready(function(){
             window.location = "/saved";
         });
     });
-
-
 });
-
-
-
-// // When user clicks on the article
-// $(document).on("click", "p", function(){
-//     // Empty notes from section
-//     $("#notes").empty();
-//     // Save ID
-//     var thisId = $(this).attr("data-id");
-
-//     // AJAX call to get articles
-//     $.ajax({
-//         method: "GET",
-//         url: "/saved/" + thisId
-//     }).then(function(data){
-//         console.log(data);
-//         // Add Subject of note     
-//         $("#notes").append("<input id='subjectinput' name='subject' >");
-
-//         // Add body
-//         $("#notes").append("<textarea id='bodyinput' name='body'></textarea>");
-
-//         // Submit Button
-//         $("#notes").append("<button data-id="+data._id + " id='submit'>Save</button>");
-
-//         // Display note
-//         if (data.note) {
-//             $("#subjectinput").val(data.note.title);
-//             $("#bodyinput").val(data.note.body);
-//         }
-//     });
-// });
