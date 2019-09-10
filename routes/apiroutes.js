@@ -58,7 +58,7 @@ module.exports = function(app) {
 
     // Get All Articles from db
     app.get("/list", function(req,res){
-        db.Article.find({}).sort({ _id: -1 }).limit(20).then(function(dbArticle) {
+        db.Article.find({}).sort({ _id: -1 }).limit(30).then(function(dbArticle) {
             // console.log(dbArticle);
                 var hbsObj = {
                     article: dbArticle
@@ -87,8 +87,9 @@ module.exports = function(app) {
     // Get Route to Save Article
     app.get("/save/:id", function(req, res){
         // Search article by id
-        db.Article.findOneAndUpdate({_id: req.params.id}, {saved: true}).then(function(dbArticle) {
+        db.Article.findOneAndUpdate({_id: req.params.id},  {$push:{ saved: true}}, {new: true}).then(function(dbArticle) {
             // Redirect user to Saved Articles Pg
+            console.log(dbArticle);
             res.redirect("/list");
         }).catch(function(err){
             // Error handler
