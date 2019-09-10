@@ -2,6 +2,8 @@
 var axios = require("axios");
 var cheerio = require("cheerio");
 var db = require("../models");
+var mongoose = require("mongoose");
+mongoose.set('useFindAndModify', false);
 
 module.exports = function(app) {
     // Scrape data
@@ -79,21 +81,22 @@ module.exports = function(app) {
             };
             // Send back saved articles
                 res.render("saved", hbsObj);
-        }).catch(err =>
-            console.log(err)
-        );
+        }).catch(function(err){
+            // Error handler
+            res.json(err);
+        })
     });
 
     // Get Route to Save Article
     app.get("/save/:id", function(req, res){
         // Search article by id
-        db.Article.findOneAndUpdate({_id: req.params.id},  {$push:{ saved: true}}, {new: true}).then(function(dbArticle) {
+        db.Article.findOneAndUpdate({_id: req.params.id},  { saved: true}, {new: true}).then(function(dbArticle) {
             // Redirect user to Saved Articles Pg
             console.log(dbArticle);
             res.redirect("/list");
         }).catch(function(err){
             // Error handler
-            res.render(err);
+            res.json(err);
         })
     });
 
@@ -106,7 +109,7 @@ module.exports = function(app) {
             res.redirect("/saved");
         }).catch(function(err){
             // Error handler
-            res.render(err);
+            res.json(err);
         })
     });
 

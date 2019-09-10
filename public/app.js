@@ -1,5 +1,3 @@
-
-
 $(document).ready(function(){
 
 
@@ -25,15 +23,18 @@ $(document).ready(function(){
     // Save Article
     $("#saveArticleBtn").on("click", function(e) {
         e.preventDefault();
+        console.log("article btn clicked!")
         let id = $(this).attr("data-id");
+        console.log(id);
         // Ajax
         $.ajax({
             method: "GET",
             url: "/save/" + id,
         }).then(function(data) {
             console.log(data);
-            window.location = "/list";
-        })
+        }).catch(err =>
+            console.log(err)
+        );
     });
 
     // Remove Article
@@ -49,6 +50,11 @@ $(document).ready(function(){
             window.location = "/saved";
         })
     });
+
+    // Open Modal
+    $("#addNote").click(function(){
+        $("#noteModal").modal();
+      });
 
     // Get Note Inputs
     $("#saveNoteBtn").on("click", function(e){
@@ -92,3 +98,4 @@ $(document).ready(function(){
         });
     });
 });
+
