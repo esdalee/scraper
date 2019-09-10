@@ -11,6 +11,6 @@ Click the Scrape button -> scroll through all the articles and save any of them 
 ![](public/images/Demo.gif)
 
 ### Technologies Used: 
-Node (mysql, inquirer node packages) written with Mongoose and JS deployed on Heroku.
+Mongoose, JavaScript/jQuery, Express, Handlebars, Cheerio, Axios
 
 #### Developed by: Esther Lee
