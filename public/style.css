@@ -30,3 +30,7 @@
 .articles li {
     list-style-type: none;
 }
+
+.modal-backdrop {
+    z-index: -1;
+  }

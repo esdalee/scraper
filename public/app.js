@@ -21,15 +21,15 @@ $(document).ready(function(){
     });
 
     // Save Article
-    $("#saveArticleBtn").on("click", function(e) {
+    $(".saveArticleBtn").on("click", function(e) {
         e.preventDefault();
         console.log("article btn clicked!")
         let id = $(this).attr("data-id");
         console.log(id);
         // Ajax
         $.ajax({
-            method: "GET",
-            url: "/save/" + id,
+            method: "POST",
+            url: "/save/" + id
         }).then(function(data) {
             console.log(data);
         }).catch(err =>
@@ -52,9 +52,9 @@ $(document).ready(function(){
     });
 
     // Open Modal
-    $("#addNote").click(function(){
-        $("#noteModal").modal();
-      });
+    // $("#addNote").click(function(){
+    //     $("#noteModal").modal();
+    //   });
 
     // Get Note Inputs
     $("#saveNoteBtn").on("click", function(e){
@@ -89,11 +89,14 @@ $(document).ready(function(){
         e.preventDefault();
         // Grab ID
         let id = $(this).attr("data-id");
+        let form = this;
         // AJAX request to delete note
         $.ajax({
             method: "DELETE",
             url: "/saved/note/delete/" + id,
         }).then(function(data){
+            $("#noteSubject").text("");
+            $("#noteBody").text("");
             window.location = "/saved";
         });
     });

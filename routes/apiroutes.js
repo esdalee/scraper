@@ -74,8 +74,8 @@ module.exports = function(app) {
 
     // Get Saved Articles from db
     app.get("/saved", function(req,res){
-        db.Article.find({saved: true}).populate("note").then(function(dbArticle) {
-            console.log(dbArticle)
+        db.Article.find({saved: true}).limit(30).then(function(dbArticle) {
+            // console.log(dbArticle)
             var hbsObj = {
                 article: dbArticle
             };
@@ -87,8 +87,8 @@ module.exports = function(app) {
         })
     });
 
-    // Get Route to Save Article
-    app.get("/save/:id", function(req, res){
+    // Post Route to Save Article
+    app.post("/save/:id", function(req, res){
         // Search article by id
         db.Article.findOneAndUpdate({_id: req.params.id},  { saved: true}, {new: true}).then(function(dbArticle) {
             // Redirect user to Saved Articles Pg

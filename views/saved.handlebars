@@ -37,15 +37,20 @@
     <div class="modal-dialog modal-md">
         <div class="modal-content">
         <div class="modal-header">
-            <h4 class="modal-title text-center">Thoughts</h4>
+            <h3 class="modal-title text-center">Thoughts</h3>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
         </div>
         <div class="modal-body">
-            <input type="text" id="noteSubject" class="noteInput" placeholder="Subject Line">
-            <input type="text" id="noteBody" class="noteInput" placeholder="Body">
+            <form>
+                <div class="form-group">
+                    <input type="text" id="noteSubject" class="noteInput" placeholder="Subject"><br><br>
+                    <input type="text" id="noteBody" class="noteInput" placeholder="Body">
+                </div>
+            </form>
         </div>
         <div class="modal-footer">
-            <button type="button" id="saveNoteBtn">Save</button>
-            <button type="button" id="deleteNoteBtn">Delete</button>
+            <button type="button" id="saveNoteBtn" data-dismiss="modal">Save</button>
+            <button type="button" id="deleteNoteBtn" data-dismiss="modal">Delete</button>
             <button type="button" class="close" data-dismiss="modal">Close</button>
         </div>
         </div>
