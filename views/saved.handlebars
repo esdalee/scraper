@@ -9,35 +9,26 @@
     </div>
 </div>
 <div class="row text-align">
-    <div class="col-md-2"></div>
-    <div class="col-md-10">
+    <div class="col-md-12">
         <ul class="articles">
-            {{#if saved}}
-                {{#each article}}
-                    <li>
-                        <div class="card">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <a href={{this.url}} target="_blank"></a>
-                                    <div class="card-body">
-                                        <h5 class="card-title">{{this.headline}}</h5>
-                                        <p class="card-text">{{this.summary}}</p>
-                                        <br><br>
-                                        <button type="button" class="btn btn-success" id="addNote" data-id={{this._id}} data-toggle="modal" data-target="#noteModal">Add A Note!</button>
-                                        <button type="button" class="btn btn-danger" id="deleteArticleBtn" data-id={{this._id}}>Delete Article</button>
-                                    </div>
+            {{#each article}}
+                <li>
+                    <div class="card">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <a href={{this.url}} target="_blank"></a>
+                                <div class="card-body">
+                                    <h5 class="card-title">{{this.headline}}</h5>
+                                    <p class="card-text">{{this.summary}}</p>
+                                    <br><br>
+                                    <button type="button" class="btn btn-success" id="addNote" data-id={{this._id}} data-toggle="modal" data-target="#noteModal">Add A Note!</button>
+                                    <button type="button" class="btn btn-danger" id="deleteArticleBtn" data-id={{this._id}}>Delete Article</button>
                                 </div>
                             </div>
                         </div>
-                    </li>
-                {{/each}}
-            {{else}}
-                <div class="panel panel-default">
-                    <div class="panel-body">
-                        <h4>None available</h4>
                     </div>
-                </div>
-            {{/if}}
+                </li>
+            {{/each}}
         </ul>
     </div>
 

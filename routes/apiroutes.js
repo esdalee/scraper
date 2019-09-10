@@ -30,15 +30,14 @@ module.exports = function(app) {
                 // console.log(url);
 
                 // Image    
-                let img = $(element).children("span.newsblock-story-card__image-link").children(".img-wireframe__image").attr("src");
-                console.log(img);
+                // let img = $(element).children("span.newsblock-story-card__image-link").children(".img-wireframe__image").children(".img-wireframe__image-container").children("img").attr("src");
+                // console.log(img);
 
                 // Object for each piece
                 let articlePiece = {
                     headline,
                     summary,
-                    url,
-                    img
+                    url
                 }
 
                 // Add article to array
@@ -51,7 +50,7 @@ module.exports = function(app) {
             }).catch(err => {
                 console.log(err);
                 res.status(500).json({
-                    error: "error occured!"
+                    error: err.message
                 });
             })
         });
@@ -59,7 +58,7 @@ module.exports = function(app) {
 
     // Get All Articles from db
     app.get("/list", function(req,res){
-        db.Article.find({}).limit(20).then(function(dbArticle) {
+        db.Article.find({}).sort({ _id: -1 }).limit(20).then(function(dbArticle) {
             // console.log(dbArticle);
                 var hbsObj = {
                     article: dbArticle
@@ -74,6 +73,7 @@ module.exports = function(app) {
     // Get Saved Articles from db
     app.get("/saved", function(req,res){
         db.Article.find({saved: true}).populate("note").then(function(dbArticle) {
+            console.log(dbArticle)
             var hbsObj = {
                 article: dbArticle
             };
