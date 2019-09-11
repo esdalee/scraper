@@ -33,9 +33,9 @@ app.set("view engine", "handlebars");
 mongoose.connect(mongodb_URI, { useNewUrlParser: true });
 
 // Routes
-app.get("/",function(req,res){
-    res.send("hello");
-});
+// app.get("/",function(req,res){
+//     res.send("hello");
+// });
 
 // html routes
 app.get("/", function (req, res) {
