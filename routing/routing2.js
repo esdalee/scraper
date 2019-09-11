@@ -1,18 +1,20 @@
-module.exports = function (app) {
+var express = require("express");
+var router2 = express.Router();
 
-    app.get("/", function (req, res) {
+// module.exports = function (app) {
+
+    router.get("/", function (req, res) {
         res.render("index");
     });
 
-    app.get("/index", function (req, res) {
+    // app.get("/", function (req, res) {
+    //     res.render("index");
+    // });
+
+    router.get("/index", function (req, res) {
         res.render("index");
     });
 
-    // app.get("/list", function (req, res) {
-    //     res.render("list");
-    // });
+// }
 
-    // app.get("/saved", function (req, res) {
-    //     res.render("saved");
-    // });
-}
+module.exports = router2;
