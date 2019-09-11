@@ -95,7 +95,7 @@ mongoose.set('useFindAndModify', false);
         db.Article.findOneAndUpdate({_id: req.params.id},  {saved: true}, {new: true}).then(function(dbArticle) {
             // Redirect user to Saved Articles Pg
             console.log(dbArticle);
-            res.redirect("/list");
+            res.redirect("/api/list");
         }).catch(function(err){
             // Error handler
             res.json(err);
@@ -108,7 +108,7 @@ mongoose.set('useFindAndModify', false);
         db.Article.findOneAndRemove({_id: req.params.id})
         .then(function(dbArticle) {
             // Redirect user to Saved Articles Pg
-            res.redirect("/saved");
+            res.redirect("/api/saved");
         }).catch(function(err){
             // Error handler
             res.json(err);

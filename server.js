@@ -19,8 +19,9 @@ var db = require("./models");
 
 // Middleware
 
-app.use("/", router1);
-app.use("/api", router2);
+app.use("/api", router1);
+app.use("/", router2);
+
 
 // Use morgan logger to log requests
 app.use(logger("dev"));

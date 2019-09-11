@@ -14,7 +14,7 @@ $(document).ready(function(){
             url: "/api/scrape",
         }).then(function(data) {
             console.log(data);
-            window.location = "/list";
+            window.location = "/api/list";
         })
     });
 
@@ -77,7 +77,7 @@ $(document).ready(function(){
                 console.log(data);
                 // Close note modal
                 $("#noteModal").modal("hide");
-                window.location = "/saved";
+                window.location = "/api/saved";
             });
         };
     });
@@ -95,7 +95,7 @@ $(document).ready(function(){
         }).then(function(data){
             $("#noteSubject").text("");
             $("#noteBody").text("");
-            window.location = "/saved";
+            window.location = "/api/saved";
         });
     });
 });
