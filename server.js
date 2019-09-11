@@ -32,8 +32,12 @@ app.set("view engine", "handlebars");
 mongoose.connect(mongodb_URI, { useNewUrlParser: true });
 
 // Routes
-require("./routing/routing1")(app);
-require("./routing/routing2")(app);
+app.get("/",function(req,res){
+    res.send("hello");
+});
+
+// require("./routing/routing1")(app);
+// require("./routing/routing2")(app);
 
 // Start server
 app.listen(PORT, function(){
