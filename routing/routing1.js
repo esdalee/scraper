@@ -90,7 +90,7 @@ module.exports = function(app) {
     // Post Route to Save Article
     app.post("/save/:id", function(req, res){
         // Search article by id
-        db.Article.findOneAndUpdate({_id: req.params.id},  { saved: true}, {new: true}).then(function(dbArticle) {
+        db.Article.findOneAndUpdate({_id: req.params.id},  {saved: true}, {new: true}).then(function(dbArticle) {
             // Redirect user to Saved Articles Pg
             console.log(dbArticle);
             res.redirect("/list");

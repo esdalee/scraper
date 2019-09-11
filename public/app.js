@@ -1,6 +1,4 @@
 $(document).ready(function(){
-
-
     // Set clicked navbar tab to active
     $(".navbar-nav li").click(function(){
         $(".navbar-nav li").removeClass("active");
