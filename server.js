@@ -9,6 +9,7 @@ var logger = require("morgan");
 // Initialize Express
 var app = express();
 var PORT = process.env.PORT || 3000;
+var mongodb_URI = process.env.MONGODB_URI || "mongodb://localhost/feedscraper";
 
 // Require all models
 // var db = require("./models");
@@ -28,7 +29,7 @@ app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
 
 // Connect to Mongodb
-mongoose.connect("mongodb://localhost/feedscraper", { useNewUrlParser: true });
+mongoose.connect(mongodb_URI, { useNewUrlParser: true });
 
 // Routes
 require("./routes/apiRoutes")(app);
@@ -36,6 +37,6 @@ require("./routes/htmlRoutes")(app);
 
 
 // Start server
-app.listen(3000, function(){
+app.listen(PORT, function(){
     console.log("Running on port" + PORT);
 });
