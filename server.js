@@ -11,7 +11,7 @@ var app = express();
 var PORT = process.env.PORT || 3000;
 
 // Require all models
-var db = require("./models");
+// var db = require("./models");
 
 // Middleware
 
