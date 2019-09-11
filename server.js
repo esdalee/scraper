@@ -13,7 +13,7 @@ var PORT = process.env.PORT || 3000;
 var mongodb_URI = process.env.MONGODB_URI || "mongodb://localhost/feedscraper";
 
 // Require all models
-// var db = require("./models");
+var db = require("./models");
 
 // Middleware
 
