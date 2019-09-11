@@ -3,7 +3,7 @@ var router2 = express.Router();
 
 // module.exports = function (app) {
 
-    router.get("/", function (req, res) {
+    router2.get("/", function (req, res) {
         res.render("index");
     });
 
@@ -11,7 +11,7 @@ var router2 = express.Router();
     //     res.render("index");
     // });
 
-    router.get("/index", function (req, res) {
+    router2.get("/index", function (req, res) {
         res.render("index");
     });
 
