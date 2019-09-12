@@ -36,8 +36,9 @@ $(document).ready(function(){
     });
 
     // Remove Article
-    $("#deleteArticleBtn").on("click", function(e) {
+    $(".deleteArticleBtn").on("click", function(e) {
         e.preventDefault();
+        console.log("clicked");
         let id = $(this).attr("data-id");
         // Ajax
         $.ajax({
@@ -45,8 +46,10 @@ $(document).ready(function(){
             url: "/api/delete/" + id,
         }).then(function(data) {
             console.log(data);
-            window.location = "/saved";
-        })
+            // window.location = "/saved";
+        }).catch(err=>
+            console.log(err)
+        );
     });
 
     // Open Modal
